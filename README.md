@@ -546,54 +546,6 @@ bool runHeld =
 
 With the correct Input Library dependency, the consuming mod does not need to read Windows keyboard state or poll XInput itself.
 
-## Porting a mod from another Input Library
-
-A mod already using the same `IInputHook` API mainly needs dependency-facing changes.
-
-Change the namespace:
-
-```csharp
-// P4G64
-using p4g64.InputLibrary64.Interfaces;
-
-// P3P
-using p3ppc.InputLibrary.Interfaces;
-```
-
-Change the referenced interface assembly:
-
-```text
-p4g64.InputLibrary64.Interfaces.dll
-```
-
-to:
-
-```text
-p3ppc.InputLibrary.Interfaces.dll
-```
-
-Change the Reloaded-II dependency:
-
-```text
-p4g64.InputLibrary64
-```
-
-to:
-
-```text
-p3ppc.InputLibrary
-```
-
-The controller/event API remains:
-
-```csharp
-GetController<IInputHook>()
-inputHook.OnInput += OnInput
-OnInput(int input, bool risingEdge, bool controlType)
-```
-
-The logical PSP-style bit values are preserved, so existing numeric checks can usually remain unchanged.
-
 ## Important implementation notes
 
 * Treat `input` as a bitmask.
